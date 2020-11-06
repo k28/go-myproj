@@ -6,9 +6,7 @@ import (
 
 func main() {
 
-	result = sum(1, 5)
+	result := myproj.configDirPath("hogehoge")
 
 	fmt.Println("Hello")
-
-	sum(1, 2)
 }
