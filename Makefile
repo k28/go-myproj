@@ -3,6 +3,8 @@ NAME := myproj
 VERSION := $(godump show -r)
 REVISION := $(shell git rev-parse --short HEAD)
 LDFLAGS := "-X main.revision=$(REVISION)"
+SRCROOT := cmd/$(NAME)
+SOURCES := $(shell find $(SRCROOT) -type f)
 
 export GO11MODULE=on
 
@@ -17,7 +19,7 @@ deps:
 devel-deps: deps
 	GO11MODULE=off go get	\
 	golang.org/x/lint/golint	\
-	github.com/motemen/gobump/cmd/gobump	\
+	github.com/x-motemen/gobump/cmd/gobump	\
 	github.com/Songmu/make2help/cmd/make2help
 
 # テストを実行する
@@ -33,8 +35,8 @@ lint: devel-deps
 	golint -set_exit_status ./...
 
 ## build binaries ex. make bin/myproj
-bin%: cmd/%/main.go deps
-	go build -ldflags "$(LDFLAGS)" -o %@ $<
+bin/%: $(SOURCES) deps
+	go build -ldflags $(LDFLAGS) -o $@ $(SOURCES)
 
 ## build binary
 .PHONY: build
@@ -44,4 +46,9 @@ build: bin/myproj
 .PHONY: help
 help:
 	@make2help $(MAKEFILE_LIST)
+
+## clean
+.PHONY: clean
+clean:
+	rm -fr bin
 

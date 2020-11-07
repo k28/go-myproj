@@ -1,12 +1,18 @@
 package main
 
 import (
-	"fmt"
+	"os"
+
+	myproj "github.com/k28/go-myproj"
 )
 
 func main() {
+	os.Exit(Run(os.Args))
+}
 
-	result := myproj.configDirPath("hogehoge")
-
-	fmt.Println("Hello")
+// Run main
+func Run(args []string) int {
+	target := parseArgs()
+	myproj.Hello(target)
+	return 0
 }
