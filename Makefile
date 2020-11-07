@@ -4,7 +4,7 @@ VERSION := $(godump show -r)
 REVISION := $(shell git rev-parse --short HEAD)
 LDFLAGS := "-X main.revision=$(REVISION)"
 SRCROOT := cmd/$(NAME)
-SOURCES := $(shell find $(SRCROOT) -type f)
+SOURCES := $(shell find $(SRCROOT) -type f -not -name '*_test.go')
 
 export GO11MODULE=on
 
@@ -40,7 +40,7 @@ bin/%: $(SOURCES) deps
 
 ## build binary
 .PHONY: build
-build: bin/myproj
+build: bin/$(NAME)
 
 ## show help
 .PHONY: help

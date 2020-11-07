@@ -8,6 +8,6 @@ func Sum(a int, b int) int {
 }
 
 // Hello say hello
-func Hello(target string) {
-	fmt.Println("Hello myproj")
+func Hello(target string) string {
+	return fmt.Sprintf("Hello %s", target)
 }
